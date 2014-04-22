@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 
 require 'octokit'
+require 'kramdown'
 
 user = ENV['GITHUB_USER']
 token = ENV['GITHUB_TOKEN']
@@ -33,22 +34,22 @@ events.each do |_|
 end
 
 # create day report
-puts "## #{Time.now.to_date} Day Report of #{user}"
+puts Kramdown::Document.new("## #{Time.now.to_date} Day Report of #{user}").to_html
 url_to_detail.each do |url, detail|
-  puts "##### #{detail[:date]} : #{detail[:title]})"
+  puts Kramdown::Document.new("##### #{detail[:date]} : #{detail[:title]})").to_html
   unless detail[:comments].nil?
     detail[:comments].reverse.each do |comment|
-      puts "  * #{comment}"
+      puts Kramdown::Document.new("  * #{comment}").to_html
     end
   end
   unless detail[:commits].nil?
     detail[:commits].reverse.each do |commit|
-      puts "  * [#{commit.message}](http://github.com/#{detail[:repo].name}/commit/#{commit.sha})"
+      puts Kramdown::Document.new("  * [#{commit.message}](http://github.com/#{detail[:repo].name}/commit/#{commit.sha})").to_html
     end
   end
   unless detail[:pages].nil?
     detail[:pages].reverse.each do |page|
-      puts "  * [#{detail[:repo].name} Wiki #{page.page_name}](#{page.html_url}) - #{page.action}"
+      puts Kramdown::Document.new("  * [#{detail[:repo].name} Wiki #{page.page_name}](#{page.html_url}) - #{page.action}").to_html
     end
   end
 end
