@@ -36,7 +36,7 @@ end
 # create day report
 puts Kramdown::Document.new("## #{Time.now.to_date} Day Report of #{user}").to_html
 url_to_detail.each do |url, detail|
-  puts Kramdown::Document.new("##### #{detail[:date]} : #{detail[:title]})").to_html
+  puts Kramdown::Document.new("##### #{detail[:date]} : #{detail[:title]}").to_html
   unless detail[:comments].nil?
     detail[:comments].reverse.each do |comment|
       puts Kramdown::Document.new("  * #{comment}").to_html
