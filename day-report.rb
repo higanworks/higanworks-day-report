@@ -32,6 +32,7 @@ events.each do |_|
   end
 end
 
+# create day report
 puts "## #{Time.now.to_date} Day Report of #{user}"
 url_to_detail.each do |url, detail|
   puts "##### #{detail[:date]} : #{detail[:title]})"
