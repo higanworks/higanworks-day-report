@@ -2,8 +2,8 @@
 
 require 'octokit'
 
-user = "user"
-token = "token"
+user = ENV['GITHUB_USER']
+token = ENV['GITHUB_TOKEN']
 
 client = Octokit::Client.new login: user, oauth_token: token
 events = client.user_events user
