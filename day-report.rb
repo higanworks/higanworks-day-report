@@ -36,6 +36,7 @@ end
 # create day report
 puts Kramdown::Document.new("## #{Time.now.to_date} Day Report of #{user}").to_html
 url_to_detail.each do |url, detail|
+  # p detail
   puts Kramdown::Document.new("##### #{detail[:date]} : #{detail[:title]}").to_html
   unless detail[:comments].nil?
     detail[:comments].reverse.each do |comment|
@@ -44,7 +45,7 @@ url_to_detail.each do |url, detail|
   end
   unless detail[:commits].nil?
     detail[:commits].reverse.each do |commit|
-      puts Kramdown::Document.new("  * [#{commit.message}](http://github.com/#{detail[:repo].name}/commit/#{commit.sha})").to_html
+      puts Kramdown::Document.new("  * [#{commit.message.match(/^.*$/)}](http://github.com/#{detail[:repo].name}/commit/#{commit.sha})").to_html
     end
   end
   unless detail[:pages].nil?
