@@ -12,28 +12,46 @@ events = client.user_events user
 
 url_to_detail = {}
 
-events.each do |_|
-  #pp _
+events.each do |event|
+  #pp event 
   #p ""
-  break unless _.created_at.getlocal.to_date == Time.now.to_date
-  case _.type
+  break unless event.created_at.getlocal.to_date == Time.now.to_date
+  case event.type
   # commit
   when "PushEvent"
-    url_to_detail[_.id] ||= {title: "Push to #{_.repo.name}", commits: _.payload.commits, repo: _.repo, date: _.created_at.getlocal}
+    url_to_detail[event.id] ||= {title: "Push to #{event.repo.name}", 
+      commits: event.payload.commits, 
+      repo: event.repo, 
+      date: event.created_at.getlocal}
   # Wiki
   when "GollumEvent"
-    url_to_detail[_.id] ||= {title: "Edit wiki of #{_.repo.name}", pages: _.payload.pages, repo: _.repo, date: _.created_at.getlocal}
+    url_to_detail[event.id] ||= {title: "Edit wiki of #{event.repo.name}", 
+      pages: event.payload.pages, 
+      repo: event.repo, 
+      date: event.created_at.getlocal}
   # Issue
   when "IssuesEvent"
-    url_to_detail[_.payload.issue.html_url] ||= {title: "'#{_.payload.issue.title}'", acts: [], repo: _.repo, date: _.created_at.getlocal}
+    url_to_detail[event.payload.issue.html_url] ||= {
+      title: "'#{event.payload.issue.title}'", 
+      acts: [], 
+      repo: event.repo, 
+      date: event.created_at.getlocal}
   # Issue acts
   when "IssueCommentEvent"
-    url_to_detail[_.payload.issue.html_url] ||= {title: "'#{_.payload.issue.title}'", acts: [], repo: _.repo, date: _.created_at.getlocal}
-    url_to_detail[_.payload.issue.html_url][:acts] << "[comment](#{_.payload.comment.html_url})"
+    url_to_detail[event.payload.issue.html_url] ||= {
+      title: "'#{event.payload.issue.title}'", 
+      acts: [], 
+      repo: event.repo, 
+      date: event.created_at.getlocal}
+    url_to_detail[event.payload.issue.html_url][:acts] << "[comment](#{event.payload.comment.html_url})"
   # pull-request
   when "PullRequestEvent"
-    url_to_detail[_.payload.pull_request.html_url] ||= {title: "'#{_.payload.pull_request.title}'", acts: [], repo: _.repo, date: _.created_at.getlocal}
-    url_to_detail[_.payload.pull_request.html_url][:acts] << "#{_.payload.action} [#{_.payload.pull_request.title}](#{_.payload.pull_request.html_url})"
+    url_to_detail[event.payload.pull_request.html_url] ||= {
+      title: "'#{event.payload.pull_request.title}'", 
+      acts: [], 
+      repo: event.repo, 
+      date: event.created_at.getlocal}
+    url_to_detail[event.payload.pull_request.html_url][:acts] << "#{event.payload.action} [#{event.payload.pull_request.title}](#{event.payload.pull_request.html_url})"
   end
 end
 
