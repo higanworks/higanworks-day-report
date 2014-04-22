@@ -1,1 +1,1 @@
-Create day report automatically from github activity
+## Create day report automatically from github activity
