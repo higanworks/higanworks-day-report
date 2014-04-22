@@ -9,6 +9,8 @@
 #   IDOBATA_HOOK_URL
 #
 
+set -eu
+
 RESULT=`${DAY_REPORT_RB_PATH}`
 
 curl --data-urlencode "source=${RESULT}" -d format=html ${IDOBATA_HOOK_URL}
