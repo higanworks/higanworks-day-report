@@ -71,7 +71,7 @@ url_to_detail.each do |url, detail|
   end
   unless detail[:pages].nil?
     detail[:pages].reverse.each do |page|
-      puts Kramdown::Document.new("  * #{page.action} [#{detail[:repo].name} Wiki #{page.page_name}](#{page.html_url})").to_html
+      puts Kramdown::Document.new("  * #{page.action} [#{page.page_name} Page](#{page.html_url})").to_html
     end
   end
 end
