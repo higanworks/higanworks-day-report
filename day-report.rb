@@ -34,7 +34,7 @@ end
 
 puts "## #{Time.now.to_date} Day Report of #{user}"
 url_to_detail.each do |url, detail|
-  puts "- #{detail[:date]} : [#{detail[:title]}](#{url})"
+  puts "##### #{detail[:date]} : #{detail[:title]})"
   unless detail[:comments].nil?
     detail[:comments].reverse.each do |comment|
       puts "  * #{comment}"
