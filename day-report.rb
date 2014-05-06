@@ -32,10 +32,11 @@ events.each do |event|
   # Issue
   when "IssuesEvent"
     url_to_detail[event.payload.issue.html_url] ||= {
-      title: "'#{event.payload.issue.title}'", 
+      title: "Issue: '#{event.payload.issue.title}'", 
       acts: [], 
       repo: event.repo, 
       date: event.created_at.getlocal}
+    url_to_detail[event.payload.issue.html_url][:acts] << "#{event.payload.action} [#{event.payload.issue.title}](#{event.payload.issue.html_url})"
   # Issue acts
   when "IssueCommentEvent"
     url_to_detail[event.payload.issue.html_url] ||= {
@@ -47,7 +48,7 @@ events.each do |event|
   # pull-request
   when "PullRequestEvent"
     url_to_detail[event.payload.pull_request.html_url] ||= {
-      title: "'#{event.payload.pull_request.title}'", 
+      title: "Pull request: '#{event.payload.pull_request.title}'", 
       acts: [], 
       repo: event.repo, 
       date: event.created_at.getlocal}
